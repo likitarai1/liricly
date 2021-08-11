@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const playlist = require('./routes/playlist');
 const db = require('./connection');
+const dotenv = require('dotenv').config();
 
 const saltRounds = 10;
 
@@ -20,8 +21,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   session({
-    key: 'userID',
-    secret: '$%nmbdshbhsj*',
+    key: process.env.KEY,
+    secret: process.env.SESSIONSECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {

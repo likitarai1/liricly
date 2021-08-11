@@ -35,6 +35,7 @@ export default function ExploreItem({ video }) {
   }, [setOpenVideo]);
 
   const openPlaylistDialog = () => {
+    getData();
     setOpen(true);
   };
 
@@ -66,8 +67,7 @@ export default function ExploreItem({ video }) {
         <IconButton>
           <AddCircleRoundedIcon
             onClick={() => {
-              setOpen(true);
-              getData();
+              openPlaylistDialog();
             }}
           />
         </IconButton>

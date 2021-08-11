@@ -4,6 +4,8 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import ytSearch from '../../apis/ytSearch';
 import ExploreList from './ExploreList';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Suspense } from 'react';
 import { useStyles } from '../../styles/ExploreStyle';
 
 export default function Explore() {
@@ -51,7 +53,9 @@ export default function Explore() {
           />
         </form>
       </div>
-      <ExploreList videos={fetchedvideos} />
+      <Suspense fallback={<CircularProgress />}>
+        <ExploreList videos={fetchedvideos} />
+      </Suspense>
     </Container>
   );
 }
