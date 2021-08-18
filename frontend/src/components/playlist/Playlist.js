@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Playlist() {
+function Playlist() {
   const [myPlaylists, setMyplaylists] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
 
@@ -100,3 +100,4 @@ export default function Playlist() {
     </Container>
   );
 }
+export default React.memo(Playlist);

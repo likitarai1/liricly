@@ -5,6 +5,8 @@ import List from '@material-ui/core/List';
 import PlaylistVideoList from './PlaylistVideoList';
 import EmptyPlaylist from './../../images/emptyPlaylist.png';
 import { makeStyles } from '@material-ui/core/styles';
+import { Suspense } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   playlist: {
@@ -42,22 +44,24 @@ export default function MyPlaylist(props) {
     <Container maxWidth="xs">
       <List className={classes.playist}>
         <h1 style={{ color: 'rgba(0, 0, 0, 0.6)' }}>{props.match.params.playlistname}</h1>
-        {videosInPlaylist.length ? (
-          <div>
-            <ul>
-              {videosInPlaylist.map((video, index) => {
-                return <PlaylistVideoList key={index} videoDetails={video.videoDetails} />;
-              })}
-            </ul>
-          </div>
-        ) : (
-          <div>
-            <img alt="Empty Playlist" src={EmptyPlaylist} style={{ width: '200px' }} />
-            <p style={{ color: 'rgba(0, 0, 0, 0.6)' }}>
-              Seems you don't have any videos in here!!!
-            </p>
-          </div>
-        )}
+        <Suspense fallback={<CircularProgress />}>
+          {videosInPlaylist.length ? (
+            <div>
+              <ul>
+                {videosInPlaylist.map((video, index) => {
+                  return <PlaylistVideoList key={index} videoDetails={video.videoDetails} />;
+                })}
+              </ul>
+            </div>
+          ) : (
+            <div>
+              <img alt="Empty Playlist" src={EmptyPlaylist} style={{ width: '200px' }} />
+              <p style={{ color: 'rgba(0, 0, 0, 0.6)' }}>
+                Seems you don't have any videos in here!!!
+              </p>
+            </div>
+          )}
+        </Suspense>
       </List>
     </Container>
   );
