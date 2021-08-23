@@ -1,5 +1,5 @@
 # liricly
-liricly is a webapp where we can create playlists and save Youtube videos for future reference. This helps us in streaming videos without being distracted by unnecessary ads and other videos. liricly uses Youtube API to fetch videos from Youtube.
+liricly is a web app where we can create playlists and save YouTube videos for future reference. This helps us in streaming videos without being distracted by unnecessary ads and other videos. liricly uses YouTube API to fetch videos from YouTube.
 
 # Languages Used
 
