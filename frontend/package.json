@@ -20,7 +20,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "ssri": "6.0.2",
-    "tar": "6.1.2",
+    "tar": "^6.1.11",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
