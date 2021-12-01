@@ -14,7 +14,13 @@ const saltRounds = 10;
 const PORT = process.env.PORT || 9000;
 
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:3000', methods: ['GET', 'POST'], credentials: true }));
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

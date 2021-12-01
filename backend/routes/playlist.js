@@ -5,13 +5,17 @@ const db = require('../connection');
 router.get('/getplaylists/:username', (req, res) => {
   const username = req.params.username;
 
-  db.query('SELECT playlistName FROM playlist WHERE user=?', [username], (err, result) => {
-    if (err) {
-      console.log('playlist route error :: ', err);
-    } else {
-      res.send({ result: result });
+  db.query(
+    'SELECT idplaylist,playlistName FROM playlist WHERE user=?',
+    [username],
+    (err, result) => {
+      if (err) {
+        console.log('playlist route error :: ', err);
+      } else {
+        res.send({ result: result });
+      }
     }
-  });
+  );
 });
 
 router.post('/create', (req, res) => {
@@ -29,6 +33,38 @@ router.post('/create', (req, res) => {
       }
     }
   );
+});
+
+router.patch('/playlistName', (req, res) => {
+  const data = {
+    newname: req.body.newplaylistname,
+    id: req.body.playlistid,
+  };
+  console.log('whats patch body ', data);
+  // db.query(
+  //   'UPDATE playlist SET playlistName=? WHERE idplaylist=?',
+  //   [data.newname, data.id],
+  //   (err, result) => {
+  //     if (err) {
+  //       console.log('playlist name patch :: ', err);
+  //     } else {
+  //       console.log('playlist name updated', result);
+  //     }
+  //   }
+  // );
+});
+
+router.delete('/', (req, res) => {
+  const data = {
+    id: req.body.playlistid,
+  };
+  db.query('DELETE FROM playlist WHERE idplaylist=?', [data.id], (err, result) => {
+    if (err) {
+      console.log('playlist delete err :: ', err);
+    } else {
+      console.log('playlist deleted', result);
+    }
+  });
 });
 
 router.post('/addvideoInplaylist', (req, res) => {

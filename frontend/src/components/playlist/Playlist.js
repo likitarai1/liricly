@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
@@ -8,7 +8,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Divider from '@material-ui/core/Divider';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Pagination from '@material-ui/lab/Pagination';
+import EditPlaylistPopup from './EditPlaylistPopup';
 
 const useStyles = makeStyles((theme) => ({
   listStyle: {
@@ -46,6 +49,7 @@ function Playlist() {
       axios
         .get(`http://localhost:9000/playlist/getplaylists/${username}`)
         .then((response) => {
+          console.log('herere:: ', response.data.result);
           setMyplaylists(response.data.result);
         })
         .catch((err) => {
@@ -54,6 +58,17 @@ function Playlist() {
     };
     getMyPlaylists();
   }, []);
+
+  const [openEditPopup, setOpenEditPopup] = useState(false);
+  const [playlistid, setPlaylistid] = useState(null);
+
+  const openEditModal = (ID) => {
+    setOpenEditPopup(true);
+    setPlaylistid(ID);
+  };
+  const closeEditModal = useCallback(() => {
+    setOpenEditPopup(false);
+  }, [setOpenEditPopup]);
 
   return (
     <Container maxWidth="sm" style={{ padding: '0% 6%' }}>
@@ -64,16 +79,34 @@ function Playlist() {
             .slice((page - 1) * itemsPerPage, page * itemsPerPage)
             .map((playlist, index) => {
               return [
-                <ListItem
-                  key={index}
-                  className={classes.listItemStyle}
-                  button
-                  onClick={() => headTo(playlist.playlistName)}
-                >
+                <ListItem key={index} className={classes.listItemStyle} button>
                   <ListItemIcon>
                     <AcUnitIcon />
                   </ListItemIcon>
-                  <ListItemText primary={playlist.playlistName.toUpperCase()} />
+                  <ListItemText
+                    primary={playlist.playlistName.toUpperCase()}
+                    onClick={() => headTo(playlist.playlistName)}
+                  />
+                  <ListItemIcon>
+                    <EditIcon
+                      onClick={() => {
+                        console.log('hi');
+                        openEditModal(playlist.idplaylist);
+                      }}
+                    />
+                    <EditPlaylistPopup
+                      openEdit={openEditPopup}
+                      closeEdit={() => {
+                        closeEditModal();
+                      }}
+                      playlistid={playlistid}
+                    />
+                    <DeleteIcon
+                      onClick={() => {
+                        console.log('hello');
+                      }}
+                    />
+                  </ListItemIcon>
                 </ListItem>,
                 <Divider />,
               ];

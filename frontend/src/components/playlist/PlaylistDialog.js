@@ -102,28 +102,29 @@ export default function PlaylistDialog({ open, onClose, playlists, videoDetails 
         </Toolbar>
       </AppBar>
       <Container>
-        <TextField
-          className={classes.playlistInput}
-          variant="outlined"
-          margin="normal"
-          name="playlistname"
-          label="Enter Playlist Name"
-          type="text"
-          id="playlistname"
-          onChange={(e) => {
-            setPlaylistName(e.target.value);
-          }}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.createbtn}
-          onClick={() => {
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
             handleCreatePlaylist();
           }}
         >
-          Create playlist
-        </Button>
+          <TextField
+            required
+            className={classes.playlistInput}
+            variant="outlined"
+            margin="normal"
+            name="playlistname"
+            label="Enter Playlist Name"
+            type="text"
+            id="playlistname"
+            onChange={(e) => {
+              setPlaylistName(e.target.value);
+            }}
+          />
+          <Button variant="contained" color="primary" className={classes.createbtn} type="submit">
+            Create playlist
+          </Button>
+        </form>
       </Container>
       <List>{renderplaylist}</List>
     </Dialog>
